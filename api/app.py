@@ -9,11 +9,8 @@ from sentiment import analyze_review
 app = Flask(__name__)
 CORS(app)
 
-# ── Load data ──────────────────────────────────────────────
 df, user_movie_matrix, movie_map, movie_poster_map = load_data()
 
-
-# ── Popular ────────────────────────────────────────────────
 @app.route("/popular", methods=["GET"])
 def get_popular():
     movie_stats = df.groupby("movieId").agg({"rating": ["mean", "count"]})
@@ -35,8 +32,6 @@ def get_popular():
 
     return jsonify(result)
 
-
-# ── Recommend ──────────────────────────────────────────────
 @app.route("/recommend", methods=["POST"])
 def recommend():
     data = request.json
@@ -49,8 +44,6 @@ def recommend():
 
     return jsonify({"recommendations": recs})
 
-
-# ── Search ─────────────────────────────────────────────────
 @app.route("/search", methods=["GET"])
 def search_movies():
     query = request.args.get("q", "").lower()
@@ -69,8 +62,6 @@ def search_movies():
 
     return jsonify(output)
 
-
-# ── Feedback ───────────────────────────────────────────────
 @app.route("/feedback", methods=["POST"])
 def feedback():
     data = request.json
@@ -79,8 +70,6 @@ def feedback():
     update(movie_id, clicked)
     return jsonify({"status": "updated"})
 
-
-# ── Review ─────────────────────────────────────────────────
 @app.route("/review", methods=["POST"])
 def review():
     data = request.json
@@ -104,6 +93,5 @@ def review():
         }
     })
 
-
-if __name__ == "__main__":
-    app.run(debug=True)
+def handler(request):
+    return app(request)
