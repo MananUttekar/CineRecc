@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "./App.css";
 
-const API = "http://127.0.0.1:5000";
+const API = "";
 
 function StarRating({ rating }) {
   const stars = Math.round(rating * 2) / 2;
